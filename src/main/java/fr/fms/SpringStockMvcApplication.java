@@ -20,7 +20,15 @@ public class SpringStockMvcApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         articleRepository.save(new Article(null, "Samsung S8", 250));
         articleRepository.save(new Article(null, "Samsung S9", 300));
-        articleRepository.save(new Article(null, "Iphone 10", 500));
+        articleRepository.save(new Article(null, "Iphone 10", 200));
+        articleRepository.save(new Article(null, "Iphone 11", 400));
+        articleRepository.save(new Article(null, "Iphone 12", 450));
+        articleRepository.save(new Article(null, "Iphone 13", 600));
+        articleRepository.save(new Article(null, "Iphone 14", 700));
+        articleRepository.save(new Article(null, "Iphone 15", 800));
+        articleRepository.save(new Article(null, "Iphone 16", 1500));
+        articleRepository.save(new Article(null, "Samsung s10", 500));
+        articleRepository.save(new Article(null, "Samsung s24", 1500));
 
         articleRepository.findAll().forEach(System.out::println);
     }

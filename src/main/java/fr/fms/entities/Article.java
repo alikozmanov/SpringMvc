@@ -50,4 +50,13 @@ public class Article implements Serializable {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }
