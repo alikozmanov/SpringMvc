@@ -13,15 +13,18 @@
     <div class="panel panel-primary">
         <div class="panel-heading">Liste des articles</div>
         <div class="panel-body">
+            <!-- Formulaire de recherche -->
             <form th:action="@{/index}" method="get">
                 <label>keyword</label>
-                <input type="text" name="keyword">
+                <input type="text" name="keyword" th:value="${keyword}">
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
+            <!-- Tableau des articles -->
             <table class="table">
-                <tr>
+                <tr><!-- En-tête du tableau -->
                     <th>Id</th><th>Description</th><th>Price</th>
                 </tr>
+                <!-- Boucle Thymeleaf pour afficher chaque article -->
                 <tr th:each="a:${listArticle}">
                     <td th:text="${a.id}"></td>
                     <td th:text="${a.description}"></td>
@@ -32,9 +35,10 @@
     </div>
 </div>
 
+<!-- Pagination -->
 <ul class="nav nav-pills">
     <li th:class="${currentPage==status.index}?'activer':''" th:each="page,status:${pages}">
-        <a th:href="@{/index(page=${status.index})}" th:text="${status.index}"></a>
+        <a th:href="@{/index(page=${status.index},keyword=${keyword})}" th:text="${status.index}"></a> <!-- Lien vers chaque page -->
     </li>
 </ul>
 

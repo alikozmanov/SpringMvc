@@ -8,5 +8,6 @@ import org.springframework.data.domain.Pageable;
 
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
+    // Une méthode pour rechercher des articles par description (avec pagination)
     Page<Article> findByDescriptionContains(String description , Pageable pageable);
 }

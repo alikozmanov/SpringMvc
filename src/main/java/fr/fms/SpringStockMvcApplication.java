@@ -7,17 +7,19 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication // Le point d'entrée de l'application
 public class SpringStockMvcApplication implements CommandLineRunner {
-    @Autowired
+    @Autowired // Injecte ArticleRepository
     ArticleRepository articleRepository;
 
     public static void main(String[] args) {
+        // Démarre l'application Spring Boot
         SpringApplication.run(SpringStockMvcApplication.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
+        // Ajoute des articles dans la base de données
         articleRepository.save(new Article(null, "Samsung S8", 250));
         articleRepository.save(new Article(null, "Samsung S9", 300));
         articleRepository.save(new Article(null, "Iphone 10", 200));
@@ -30,6 +32,7 @@ public class SpringStockMvcApplication implements CommandLineRunner {
         articleRepository.save(new Article(null, "Samsung s10", 500));
         articleRepository.save(new Article(null, "Samsung s24", 1500));
 
+        // Affiche tous les articles dans la console
         articleRepository.findAll().forEach(System.out::println);
     }
 }

@@ -16,20 +16,27 @@ import java.util.List;
 
 @Controller
 public class ArticleController {
-    @Autowired
+    @Autowired // Injecte
     ArticleRepository articleRepository;
 
-    @GetMapping("/index")
+    @GetMapping("/index") // Mappe la route "/index" pour les requêtes GET
     public String index(Model model, @RequestParam(name = "page" ,defaultValue = "0") int page,
-                                     @RequestParam(name = "keyword" , defaultValue = "") String kw) {
+                                     @RequestParam(name = "keyword" , defaultValue = "") String kw) { // Param pour la recherche par mot-clé
+        // Récupere un article et filtrés par mots clé et limite page à 5
         Page<Article> articles = articleRepository.findByDescriptionContains(kw,PageRequest.of(page,5));
 
-        model.addAttribute("listArticle", articles.getContent()); // Pour récupérer sous forme de liste la page pointée
+        // Ajoute la liste des articles dans le modèle
+        model.addAttribute("listArticle", articles.getContent());
 
+        // Ajoute un tableau d'entiers
         model.addAttribute("pages", new int[articles.getTotalPages()]);
 
+        // Ajoute le numéro de la page actuelle
         model.addAttribute("currentPage", page);
 
-        return "articles"; // Retourne la vue "articles.html"
+        // Ajoute le mot-clé et l'affiche dans la vue
+        model.addAttribute("keyword", kw);
+
+        return "articles";
     }
 }
