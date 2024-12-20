@@ -21,6 +21,7 @@ public class Article implements Serializable {
         this.id = id;
         this.description = description;
         this.price = price;
+        
     }
 
     public Article(){

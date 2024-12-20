@@ -7,36 +7,47 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 public class ArticleController {
-    @Autowired // Injecte
+    @Autowired
     ArticleRepository articleRepository;
 
-    @GetMapping("/index") // Mappe la route "/index" pour les requêtes GET
-    public String index(Model model, @RequestParam(name = "page" ,defaultValue = "0") int page,
-                                     @RequestParam(name = "keyword" , defaultValue = "") String kw) { // Param pour la recherche par mot-clé
-        // Récupere un article et filtrés par mots clé et limite page à 5
+    //@RequestMapping(value="/index" , methode=RequestMethod.GET)
+    @GetMapping("/index")   //dans une servlet on utilisait request.getParameter("page")
+    public String index(Model model, @RequestParam(name = "page", defaultValue = "0")int page,
+                        @RequestParam(name = "keyword",defaultValue = "")String kw) {//le model est fourni par spring, je peux l'utiliser comme ci
         Page<Article> articles = articleRepository.findByDescriptionContains(kw,PageRequest.of(page,5));
+        //en retour, au lieu d'une liste d'articles, on a tous les articles formatés en page pointant sur la page demandée
+        model.addAttribute("listArticle",articles.getContent()); //pour récupérer sous forme de liste la page pointée
 
-        // Ajoute la liste des articles dans le modèle
-        model.addAttribute("listArticle", articles.getContent());
+        model.addAttribute("pages",new int[articles.getTotalPages()]);
 
-        // Ajoute un tableau d'entiers
-        model.addAttribute("pages", new int[articles.getTotalPages()]);
+        model.addAttribute("currentPage",page);
 
-        // Ajoute le numéro de la page actuelle
-        model.addAttribute("currentPage", page);
-
-        // Ajoute le mot-clé et l'affiche dans la vue
         model.addAttribute("keyword", kw);
-
-        return "articles";
+        return "articles"; //cette méthode retourne au dispacterServlet une vue
     }
+
+    @GetMapping("/delete")
+    public String delete(Long id, int page, String keyword) {
+        articleRepository.deleteById(id);
+
+        return "redirect:/index?page="+page+"&keyword="+keyword;
+    }
+
+    @GetMapping("/article")
+    public String article() {
+        return "article";
+    }
+
+    @PostMapping("/save")
+    public String save(Article article) {
+        articleRepository.save(article);
+        return "article";
+    }
+
 }
