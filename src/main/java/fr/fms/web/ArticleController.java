@@ -52,7 +52,7 @@ public class ArticleController {
         if (bindingResult.hasErrors()) {
             // Ajouter l’objet article au modèle en cas d’erreurs de validation
             model.addAttribute("article", article);
-            return "article"; /
+            return "article"; 
         }
         articleRepository.save(article); // Enregistrez l’article s’il n’y a pas d’erreurs
         return "redirect:/index"; // Redirection
