@@ -13,9 +13,11 @@
       <div class="panel-heading">Saisir nouvel article</div>
       <div class="panel-body">
         <form th:action="@{/save}" method="post">
+
           <div class="form-group">
             <label class="control-label">Description :</label>
             <input class="form-control" type="text" name="description">
+            <span th:errors="${article.description}"></span>
           </div>
           <div class="form-group">
             <label class="control-label">Brand :</label>
@@ -24,6 +26,7 @@
           <div class="form-group">
             <label class="control-label">Price :</label>
             <input class="form-control" type="text" name="price">
+            <span th:errors="${article.price}"></span>
           </div>
           <button type="submit" class="btn btn-primary">Save</button>
         </form>

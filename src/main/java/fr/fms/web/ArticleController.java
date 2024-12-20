@@ -7,8 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -40,14 +42,21 @@ public class ArticleController {
     }
 
     @GetMapping("/article")
-    public String article() {
+    public String article(Model model) {
+        model.addAttribute("article", new Article());
         return "article";
     }
 
     @PostMapping("/save")
-    public String save(Article article) {
-        articleRepository.save(article);
-        return "article";
+    public String save(Model model, @Valid Article article, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // Add the article object to the model in case of validation errors
+            model.addAttribute("article", article);
+            return "article"; // Return to the same form
+        }
+        articleRepository.save(article); // Save the article if no errors
+        return "redirect:/index"; // Redirect after saving
     }
+
 
 }
