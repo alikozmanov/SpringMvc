@@ -50,12 +50,12 @@ public class ArticleController {
     @PostMapping("/save")
     public String save(Model model, @Valid Article article, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            // Add the article object to the model in case of validation errors
+            // Ajouter l’objet article au modèle en cas d’erreurs de validation
             model.addAttribute("article", article);
-            return "article"; // Return to the same form
+            return "article"; /
         }
-        articleRepository.save(article); // Save the article if no errors
-        return "redirect:/index"; // Redirect after saving
+        articleRepository.save(article); // Enregistrez l’article s’il n’y a pas d’erreurs
+        return "redirect:/index"; // Redirection
     }
 
 
