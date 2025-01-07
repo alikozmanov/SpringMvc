@@ -57,7 +57,7 @@ public class ArticleController {
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
         model.addAttribute("article", article);
-        return "article"; // Redirige vers le formulaire pour modifier
+        return "article"; // Redirige
     }
 
     @GetMapping("/category")
